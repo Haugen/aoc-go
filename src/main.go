@@ -7,15 +7,16 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 
 	"github.com/joho/godotenv"
 )
 
 var client = &http.Client{}
+var dayFlag = flag.Int("day", 0, "Select day")
 
 func main() {
-	var dayFlag = flag.Int("day", 0, "Select day")
 	flag.Parse()
 
 	if *dayFlag == 0 {
@@ -25,19 +26,44 @@ func main() {
 		log.Fatal("Please choose a day between 1 and 25")
 	}
 
-	err := godotenv.Load(".env")
+	ex, err := os.Executable()
+	if err != nil {
+		log.Fatal(err)
+	}
+	binPath := filepath.Dir(ex)
+
+	err = godotenv.Load(binPath + "/../.env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
 	year := os.Getenv("YEAR")
-	inputString := fetchInputData(year, strconv.FormatInt(int64(*dayFlag), 10))
-	fmt.Println(inputString)
+	dayString := strconv.FormatInt(int64(*dayFlag), 10)
+	inputString := fetchInputData(year, dayString)
+
+	folderPath := binPath + "/../" + year + "/" + dayString
+	writeInputFile(folderPath, inputString)
+
+	fmt.Printf("Successfully generated template and input file for day %s year %s. Good luck!\n", dayString, year)
+}
+
+func writeInputFile(folderPath string, input string) {
+	os.MkdirAll(folderPath, os.ModePerm)
+
+	f, err := os.Create(folderPath + "/input.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	f.WriteString(input)
 }
 
 func fetchInputData(year string, day string) string {
 	aocSession := os.Getenv("AOC_SESSION")
-	req, err := http.NewRequest("GET", "https://adventofcode.com/"+year+"/day/"+day+"/input", nil)
+	url := "https://adventofcode.com/" + year + "/day/" + day + "/input"
+
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
