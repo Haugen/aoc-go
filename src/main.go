@@ -1,11 +1,13 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/joho/godotenv"
 )
@@ -13,35 +15,44 @@ import (
 var client = &http.Client{}
 
 func main() {
-	err := godotenv.Load("../.env")
+	var dayFlag = flag.Int("day", 0, "Select day")
+	flag.Parse()
+
+	if *dayFlag == 0 {
+		log.Fatal("You need to provide a day with the --day flag.")
+	}
+	if *dayFlag > 25 {
+		log.Fatal("Please choose a day between 1 and 25")
+	}
+
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
-	AOC_SESSION := os.Getenv("AOC_SESSION")
-	YEAR := os.Getenv("YEAR")
+	year := os.Getenv("YEAR")
+	inputString := fetchInputData(year, strconv.FormatInt(int64(*dayFlag), 10))
+	fmt.Println(inputString)
+}
 
-	fmt.Println(AOC_SESSION)
-	fmt.Println(YEAR)
-
-	req, err := http.NewRequest("GET", "https://adventofcode.com/"+YEAR+"/day/1/input", nil)
+func fetchInputData(year string, day string) string {
+	aocSession := os.Getenv("AOC_SESSION")
+	req, err := http.NewRequest("GET", "https://adventofcode.com/"+year+"/day/"+day+"/input", nil)
 	if err != nil {
-		fmt.Println("Error creating HTTP request:", err)
-		return
+		log.Fatal(err)
 	}
-	req.Header.Add("cookie", "session="+AOC_SESSION)
+	req.Header.Add("cookie", "session="+aocSession)
 
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println("Error sending HTTP request:", err)
-		return
+		log.Fatal(err)
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("Error reading HTTP response body:", err)
+		log.Fatal(err)
 	}
 
-	fmt.Println(string(body))
+	return string(body)
 }
