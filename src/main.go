@@ -39,9 +39,9 @@ func main() {
 
 	year := os.Getenv("YEAR")
 	dayString := strconv.FormatInt(int64(*dayFlag), 10)
-	inputString := fetchInputData(year, dayString)
+	folderPath := binPath + "/../solutions/" + year + "/" + dayString
 
-	folderPath := binPath + "/../" + year + "/" + dayString
+	inputString := fetchInputData(year, dayString)
 	writeInputFile(folderPath, inputString)
 
 	fmt.Printf("Successfully generated template and input file for day %s year %s. Good luck!\n", dayString, year)
