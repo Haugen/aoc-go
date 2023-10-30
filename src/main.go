@@ -43,8 +43,32 @@ func main() {
 
 	inputString := fetchInputData(year, dayString)
 	writeInputFile(folderPath, inputString)
+	copyTemplateFile(binPath, folderPath)
 
 	fmt.Printf("Successfully generated template and input file for day %s year %s. Good luck!\n", dayString, year)
+}
+
+func copyTemplateFile(binPath string, folderPath string) int64 {
+	src := binPath + "/../src/template/main.go"
+
+	source, err := os.Open(src)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer source.Close()
+
+	dest, err := os.Create(folderPath + "/main.go")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer dest.Close()
+
+	nBytes, err := io.Copy(dest, source)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return nBytes
 }
 
 func writeInputFile(folderPath string, input string) {
