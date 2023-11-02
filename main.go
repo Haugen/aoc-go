@@ -7,16 +7,15 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"path/filepath"
 	"strconv"
 
 	"github.com/joho/godotenv"
 )
 
 var client = &http.Client{}
-var dayFlag = flag.Int("day", 0, "Select day")
 
 func main() {
+	dayFlag := flag.Int("day", 0, "Select day")
 	flag.Parse()
 
 	if *dayFlag == 0 {
@@ -26,30 +25,31 @@ func main() {
 		log.Fatal("Please choose a day between 1 and 25")
 	}
 
-	ex, err := os.Executable()
+	path, err := os.Getwd()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
-	binPath := filepath.Dir(ex)
 
-	err = godotenv.Load(binPath + "/../.env")
+	fmt.Println(path)
+
+	err = godotenv.Load(path + "/.env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
 	year := os.Getenv("YEAR")
 	dayString := strconv.FormatInt(int64(*dayFlag), 10)
-	folderPath := binPath + "/../solutions/" + year + "/" + dayString
+	folderPath := path + "/solutions/" + year + "/" + dayString
 
 	inputString := fetchInputData(year, dayString)
 	writeInputFile(folderPath, inputString)
-	copyTemplateFile(binPath, folderPath)
+	copyTemplateFile(path, folderPath)
 
 	fmt.Printf("Successfully generated template and input file for day %s year %s. Good luck!\n", dayString, year)
 }
 
 func copyTemplateFile(binPath string, folderPath string) int64 {
-	src := binPath + "/../src/template/main.go"
+	src := binPath + "/internal/template/main.go"
 
 	source, err := os.Open(src)
 	if err != nil {
