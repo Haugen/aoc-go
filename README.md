@@ -1,6 +1,8 @@
-# Advent of Code - GoLang template
+<h1 align="center">
+:christmas_tree: Advent of Code in Go :christmas_tree:
+</h1>
 
-A repository to automate some tasks related to Advent of Code.
+aoc-go is a repository intended to automate some tasks related to Advent of Code, like fetching input data and provide a starting template for each day. The repository is intended to be forked and used to solve puzzles directly in it.
 
 ## Get your session token
 
@@ -10,7 +12,32 @@ Once you have your token, copy .env.example, rename it to .env, and include your
 
 ## Usage
 
-The binary for fetching your input data and setting up a template is located in `/bin`.
+- First of all, make sure you have your `.env` file setup and both the `AOC_SESSION` and `YEAR` variables set.
+- From the root of this project, run for example `go run main.go --day=1`. This will fetch data for day 1 for the configured year and set up a template for you to get started.
+- Templated will be created at the path `solutions/{year}/{day}`.
 
-- Select the year you want to work with in your .env file.
-- Run for example `./bin/aocgo --day=5` to start working with day 5 for the selected year.
+## The template
+
+The template to get started each day looks like below. It will import the fetched input data relative to your current path, so make sure you navigate into your day folder and run the script from there. A provided utility function will read the input data and transform it to an array where each line in the input data file is an item. Lastly, a loop is setup to go over the array line by line. From there you're on your own.
+
+Additional utilities are provided in the `utils` package.
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/Haugen/aoc-go/internal/utils"
+)
+
+func main() {
+	path, _ := os.Getwd()
+	data := utils.FilenameToArray(path + "/input.txt")
+
+	for _, line := range data {
+		fmt.Println(line)
+	}
+}
+```
