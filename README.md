@@ -46,6 +46,8 @@ func main() {
 
 All utility functions are provided in the github.com/Haugen/aoc-go/internal/utils package.
 
-| Function         | Description                |
-| ---------------- | -------------------------- |
-| `utils.StrToInt` | Convert a string to an int |
+| Function                   | Description                                   |
+| -------------------------- | --------------------------------------------- |
+| `utils.StrToInt`           | Convert a string to an int                    |
+| `utils.StrArrayToIntArray` | Convert an array of string to an array of int |
+| `utils.SumArray`           | Sum array of int                              |
