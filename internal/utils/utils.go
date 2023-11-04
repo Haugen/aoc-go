@@ -27,9 +27,25 @@ func FilenameToArray(filename string) []string {
 }
 
 func StrToInt(str string) int {
-	i, err := strconv.Atoi(str)
+	num, err := strconv.Atoi(str)
 	if err != nil {
 		log.Fatal(err)
 	}
-	return i
+	return num
+}
+
+func StrArrayToIntArray(arr []string) []int {
+	var newArr []int
+	for _, v := range arr {
+		newArr = append(newArr, StrToInt(v))
+	}
+	return newArr
+}
+
+func SumArray(array []int) int {
+	sum := 0
+	for _, v := range array {
+		sum += v
+	}
+	return sum
 }
