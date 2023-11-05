@@ -7,14 +7,16 @@ import (
 	"github.com/Haugen/aoc-go/internal/utils"
 )
 
+var data []string
+
 func main() {
 	path, _ := os.Getwd()
-	data := utils.FilenameToArray(path + "/input.txt")
+	data = utils.FilenameToArray(path + "/input.txt")
 
-	part1(data)
+	part1()
 }
 
-func part1(data []string) {
+func part1() {
 	for _, line := range data {
 		fmt.Println(line)
 	}
