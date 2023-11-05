@@ -34,10 +34,10 @@ func part2(data []string) {
 		curr := data[i : i+3]
 		next := data[i+1 : i+4]
 
-		currCount := utils.SumArray(utils.StrArrayToIntArray(curr))
-		nextCount := utils.SumArray(utils.StrArrayToIntArray(next))
+		currSum := utils.SumArray(utils.StrArrayToIntArray(curr))
+		nextSum := utils.SumArray(utils.StrArrayToIntArray(next))
 
-		if nextCount > currCount {
+		if nextSum > currSum {
 			count++
 		}
 	}

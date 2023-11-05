@@ -18,7 +18,7 @@ Once you have your token, copy .env.example, rename it to .env, and include your
 
 ## The template
 
-The template to get started each day looks like below. It will import the fetched input data relative to your current path, so make sure you navigate into your day folder and run the script from there. A provided utility function will read the input data and transform it to an array where each line in the input data file is an item. Lastly, a loop is prepared to go over the array line by line. From there you're on your own.
+The template to get started each day looks like below. It will import the fetched input data relative to your current path, so make sure you navigate into your day folder and run the script from there. A provided utility function will read the input data and transform it to an array where each line in the input data file is an item. A function, `part1()` is then prepared to run part 1 of the problem for the day.
 
 Additional utilities are provided in the `utils` package.
 
@@ -36,10 +36,15 @@ func main() {
 	path, _ := os.Getwd()
 	data := utils.FilenameToArray(path + "/input.txt")
 
+	part1(data)
+}
+
+func part1(data []string) {
 	for _, line := range data {
 		fmt.Println(line)
 	}
 }
+
 ```
 
 ## Useful utils while solving puzzles
