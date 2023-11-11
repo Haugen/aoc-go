@@ -2,7 +2,7 @@
 :christmas_tree: Advent of Code in Go :christmas_tree:
 </h1>
 
-aoc-go is a repository intended to automate some tasks related to Advent of Code, like fetching input data and provide a starting template for each day. The repository should be forked and used to solve puzzles directly in it. If a `solutions` folder is present, delete it after forking to get started on your own.
+aoc-go is a repository intended to automate some tasks related to Advent of Code, like fetching input data and provide a starting template for each day, as well as providing utility functions for commonly used tasks. The repository should be forked and used to solve puzzles directly in it. If a `solutions` folder is present, delete it after forking to get started on your own.
 
 ## Get your session token
 
