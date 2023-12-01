@@ -56,6 +56,8 @@ All utility functions are provided in the github.com/Haugen/aoc-go/internal/util
 
 | Function                   | Description                                   |
 | -------------------------- | --------------------------------------------- |
+| `utils.IntToStr`           | Convert an int to a string                    |
 | `utils.StrToInt`           | Convert a string to an int                    |
+| `utils.StrToArray`         | Convert a string to an array of strings       |
 | `utils.StrArrayToIntArray` | Convert an array of string to an array of int |
 | `utils.SumArray`           | Sum array of int                              |
