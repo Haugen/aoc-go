@@ -42,6 +42,13 @@ func part1() {
 	fmt.Println(total)
 }
 
+func checkAppend(arr []string, test string) (bool, string) {
+	if slices.Contains(arr, test) {
+		return true, utils.IntToStr(slices.Index(arr, test) + 1)
+	}
+	return false, ""
+}
+
 func part2() {
 	spelledNums := []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
 	var numbers [][]string
@@ -56,20 +63,23 @@ func part2() {
 			} else {
 				if i < len(lineArr)-4 {
 					test := lineArr[i] + lineArr[i+1] + lineArr[i+2] + lineArr[i+3] + lineArr[i+4]
-					if slices.Contains(spelledNums, test) {
-						localNums = append(localNums, utils.IntToStr(slices.Index(spelledNums, test)+1))
+					shouldAppend, value := checkAppend(spelledNums, test)
+					if shouldAppend {
+						localNums = append(localNums, value)
 					}
 				}
 				if i < len(lineArr)-3 {
 					test := lineArr[i] + lineArr[i+1] + lineArr[i+2] + lineArr[i+3]
-					if slices.Contains(spelledNums, test) {
-						localNums = append(localNums, utils.IntToStr(slices.Index(spelledNums, test)+1))
+					shouldAppend, value := checkAppend(spelledNums, test)
+					if shouldAppend {
+						localNums = append(localNums, value)
 					}
 				}
 				if i < len(lineArr)-2 {
 					test := lineArr[i] + lineArr[i+1] + lineArr[i+2]
-					if slices.Contains(spelledNums, test) {
-						localNums = append(localNums, utils.IntToStr(slices.Index(spelledNums, test)+1))
+					shouldAppend, value := checkAppend(spelledNums, test)
+					if shouldAppend {
+						localNums = append(localNums, value)
 					}
 				}
 			}
