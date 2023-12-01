@@ -26,12 +26,24 @@ func FilenameToArray(filename string) []string {
 	return inputLines
 }
 
+func IntToStr(num int) string {
+	return strconv.FormatInt(int64(num), 10)
+}
+
 func StrToInt(str string) int {
 	num, err := strconv.Atoi(str)
 	if err != nil {
 		log.Fatal(err)
 	}
 	return num
+}
+
+func StrToArray(str string) []string {
+	var arr []string
+	for _, l := range str {
+		arr = append(arr, string(l))
+	}
+	return arr
 }
 
 func StrArrayToIntArray(arr []string) []int {
