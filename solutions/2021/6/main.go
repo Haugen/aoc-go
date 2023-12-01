@@ -22,7 +22,7 @@ func part1() {
 	dataArr := utils.StrArrayToIntArray(dataArrStr)
 
 	var count int
-	for i := 0; i < 256; i++ {
+	for i := 0; i < 80; i++ {
 		count = 0
 		for j := 0; j < len(dataArr); j++ {
 			if dataArr[j] == 0 {
