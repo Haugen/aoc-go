@@ -30,6 +30,11 @@ func IntToStr(num int) string {
 	return strconv.FormatInt(int64(num), 10)
 }
 
+func IsInt(test string) bool {
+	_, err := strconv.Atoi(test)
+	return err != nil
+}
+
 func StrToInt(str string) int {
 	num, err := strconv.Atoi(str)
 	if err != nil {
