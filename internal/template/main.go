@@ -3,21 +3,32 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/Haugen/aoc-go/internal/utils"
 )
 
-var data []string
-
-func main() {
-	path, _ := os.Getwd()
-	data = utils.FilenameToArray(path + "/input.txt")
-
-	part1()
+type worker struct {
+	data []string
 }
 
-func part1() {
-	for _, line := range data {
-		fmt.Println(line)
+func main() {
+	worker := Init()
+	worker.MakeLines()
+}
+
+func Init() worker {
+	path, _ := os.Getwd()
+	var data = utils.FilenameToArray(path + "/input.txt")
+
+	return worker{
+		data: data,
+	}
+}
+
+func (w *worker) MakeLines() {
+	for _, line := range w.data {
+		splitLine := strings.Split(line, " ")
+		fmt.Println(splitLine)
 	}
 }
