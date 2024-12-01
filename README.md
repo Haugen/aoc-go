@@ -22,7 +22,7 @@ Once you have your token, copy .env.example, rename it to .env, and include your
 
 ## The template
 
-The template to get started each day looks like below. Additional utilities are provided in the `utils` package.
+The template to get started each day looks like below. Additional utilities are provided in the `utils` package. Template has been updated in 2024 to practice more of a "Go style", working with a single struct, adding datastructures and methods to it.
 
 ```go
 package main
@@ -30,24 +30,36 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/Haugen/aoc-go/internal/utils"
 )
 
-var data []string
+type worker struct {
+	data []string
+}
 
 func main() {
-	path, _ := os.Getwd()
-	data = utils.FilenameToArray(path + "/input.txt")
-
-	part1()
+	worker := Init()
+	worker.MakeLines()
 }
 
-func part1() {
-	for _, line := range data {
-		fmt.Println(line)
+func Init() worker {
+	path, _ := os.Getwd()
+	var data = utils.FilenameToArray(path + "/input.txt")
+
+	return worker{
+		data: data,
 	}
 }
+
+func (w *worker) MakeLines() {
+	for _, line := range w.data {
+		splitLine := strings.Split(line, " ")
+		fmt.Println(splitLine)
+	}
+}
+
 ```
 
 ## Useful utils while solving puzzles
@@ -57,6 +69,7 @@ All utility functions are provided in the github.com/Haugen/aoc-go/internal/util
 | Function                   | Description                                   |
 | -------------------------- | --------------------------------------------- |
 | `utils.IntToStr`           | Convert an int to a string                    |
+| `utils.IsInt`              | Check if string is an int                     |
 | `utils.StrToInt`           | Convert a string to an int                    |
 | `utils.StrToArray`         | Convert a string to an array of strings       |
 | `utils.StrArrayToIntArray` | Convert an array of string to an array of int |
