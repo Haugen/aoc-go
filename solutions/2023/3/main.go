@@ -27,16 +27,8 @@ func part1() {
 
 		fmt.Println(lineArr)
 
-		for _, char := range lineArr {
-			isInt := utils.IsInt(char)
-		}
-
-		if i == 0 {
-
-		}
-
-		if i > len(lines)-1 {
-
-		}
+		// for _, char := range lineArr {
+		// 	isInt := utils.IsInt(char)
+		// }
 	}
 }
