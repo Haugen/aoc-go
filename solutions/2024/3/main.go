@@ -10,7 +10,9 @@ import (
 )
 
 type worker struct {
-	data []string
+	data     []string
+	p1Result int
+	p2Result int
 }
 
 func main() {
@@ -23,7 +25,9 @@ func Init() worker {
 	var data = utils.FilenameToArray(path + "/input.txt")
 
 	return worker{
-		data: data,
+		data:     data,
+		p1Result: 0,
+		p2Result: 0,
 	}
 }
 
@@ -59,15 +63,24 @@ func (w worker) Result(leftNums []string, rightNums []string) int {
 }
 
 func (w *worker) MakeLines() {
-	sum := 0
-
+	enabled := true
 	for _, line := range w.data {
 		splitLine := strings.Split(line, " ")
 
 		for _, cl := range splitLine {
-			for i := 0; i < len(cl)-4; i++ {
-				word := string(cl[i]) + string(cl[i+1]) + string(cl[i+2]) + string(cl[i+3])
-				if word == "mul(" {
+			for i := 0; i < len(cl)-6; i++ {
+				mul := string(cl[i]) + string(cl[i+1]) + string(cl[i+2]) + string(cl[i+3])
+				do := string(cl[i]) + string(cl[i+1]) + string(cl[i+2]) + string(cl[i+3])
+				dont := string(cl[i]) + string(cl[i+1]) + string(cl[i+2]) + string(cl[i+3]) + string(cl[i+4]) + string(cl[i+5]) + string(cl[i+6])
+
+				if do == "do()" {
+					enabled = true
+				}
+				if dont == "don't()" {
+					enabled = false
+				}
+
+				if mul == "mul(" {
 					first := i + 4
 
 					leftNums, k := w.ProduceNumList(cl, first)
@@ -83,11 +96,14 @@ func (w *worker) MakeLines() {
 					}
 
 					result := w.Result(leftNums, rightNums)
-					sum += result
+					w.p1Result += result
+					if enabled {
+						w.p2Result += result
+					}
 				}
 			}
 		}
 	}
 
-	fmt.Println(sum)
+	fmt.Println(w.p1Result, w.p2Result)
 }
