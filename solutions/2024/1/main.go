@@ -31,7 +31,7 @@ func main() {
 
 func Init() worker {
 	path, _ := os.Getwd()
-	var data = utils.FilenameToArray(path + "/input.txt")
+	data := utils.FilenameToArray(path + "/input.txt")
 
 	return worker{
 		data:     data,
