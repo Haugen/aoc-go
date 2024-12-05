@@ -9,26 +9,29 @@ import (
 )
 
 type worker struct {
-	data []string
+	data [][]string
 }
 
 func main() {
 	worker := Init()
-	worker.MakeLines()
+	worker.Do()
 }
 
 func Init() worker {
 	path, _ := os.Getwd()
-	var data = utils.FilenameToArray(path + "/input.txt")
+	raw := utils.FilenameToArray(path + "/input.txt")
+	data := make([][]string, len(raw))
+
+	for _, line := range raw {
+		splitLine := strings.Split(line, "")
+		data = append(data, splitLine)
+	}
 
 	return worker{
 		data: data,
 	}
 }
 
-func (w *worker) MakeLines() {
-	for _, line := range w.data {
-		splitLine := strings.Split(line, " ")
-		fmt.Println(splitLine)
-	}
+func (w *worker) Do() {
+	fmt.Println(w.data)
 }
