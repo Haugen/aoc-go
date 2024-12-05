@@ -195,14 +195,14 @@ func (w *worker) MakeLines() {
 	for i := 0; i < len(w.data); i++ {
 		for j := 0; j < len(w.data[i]); j++ {
 			// Part 1
-			// score, found := w.Find(i, j)
-			// if found {
-			// 	part1 += score
-			// }
+			score, found := w.Find(i, j)
+			if found {
+				part1 += score
+			}
 
 			// Part 2
-			found := w.FindX(i, j)
-			if found {
+			found2 := w.FindX(i, j)
+			if found2 {
 				part2++
 			}
 		}
